@@ -1,12 +1,10 @@
-package org.niebieskidom.entity;
+package org.niebieskidom.Blue_Camps.domain.entity;
 
 import org.hibernate.validator.constraints.pl.PESEL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,6 +30,7 @@ public class Child {
     @NotNull
     @NotEmpty
     @DateTimeFormat
+    @Past
     private LocalDateTime birthDate;
     @NotNull
     @NotEmpty
