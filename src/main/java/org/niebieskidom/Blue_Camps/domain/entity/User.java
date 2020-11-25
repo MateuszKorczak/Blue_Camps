@@ -1,9 +1,10 @@
-package org.niebieskidom.entity;
+package org.niebieskidom.Blue_Camps.domain.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +26,8 @@ public class User {
     @NotNull
     @NotEmpty
     private String password;
+    @OneToMany
+    private List<Child> child;
 
 
 }
