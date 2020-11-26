@@ -7,7 +7,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -42,7 +43,8 @@ public class User {
     private String password = BCrypt.hashpw("", BCrypt.gensalt());
 
     @OneToMany
-    private Set<Child> child;
+    @JoinColumn(name = "id_child")
+    private List<Child> children = new ArrayList<>();   // czy lepiej byłoby korzystać z set?
 
 
 

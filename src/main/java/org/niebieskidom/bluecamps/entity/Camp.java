@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "camps")
@@ -32,6 +34,8 @@ public class Camp {
     @NotEmpty
     private String place;
 
-
+    @ManyToMany
+    @JoinColumn(name = "id_child")
+    private List<Child> children = new ArrayList<>();   // czy lepiej byłoby korzystać z set?
 
 }

@@ -77,4 +77,6 @@ public class Child {
     @NotNull
     @NotEmpty
     private boolean agreement;
+
+    private String paymentStatus;
 }
