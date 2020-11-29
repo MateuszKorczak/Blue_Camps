@@ -32,20 +32,27 @@ public class Camp {
 
     @NotNull
     @NotEmpty
-    private String place;
+    private String address;
 
     @ManyToMany
-    @JoinColumn(name = "id_child")
-    private List<Child> children = new ArrayList<>();   // czy lepiej byłoby korzystać z set?
+    @JoinTable(name = "camps_children", joinColumns = @JoinColumn(name = "camp_id"), inverseJoinColumns = @JoinColumn(name = "children_id"))
+    private List<Child> children = new ArrayList<>();
 
     public Camp() {
     }
 
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String place, List<Child> children) {
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address) {
         this.campsName = campsName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.place = place;
+        this.address = address;
+    }
+
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address, List<Child> children) {
+        this.campsName = campsName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.address = address;
         this.children = children;
     }
 
@@ -81,12 +88,12 @@ public class Camp {
         this.endDate = endDate;
     }
 
-    public String getPlace() {
-        return place;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setAddress(String place) {
+        this.address = place;
     }
 
     public List<Child> getChildren() {
@@ -104,7 +111,7 @@ public class Camp {
                 ", campsName='" + campsName + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", place='" + place + '\'' +
+                ", place='" + address + '\'' +
                 ", children=" + children +
                 '}';
     }

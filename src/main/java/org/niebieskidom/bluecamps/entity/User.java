@@ -18,8 +18,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Login is mandatory")
-    @NotEmpty(message = "Login is mandatory")
+    @NotNull
+    @NotEmpty
     private String login;
 
     @NotNull
@@ -30,8 +30,8 @@ public class User {
     @NotEmpty
     private String lastName;
 
-    @NotNull(message = "Email is mandatory")
-    @NotEmpty(message = "Email is mandatory")
+    @NotNull
+    @NotEmpty
     @Email
     @Column(unique = true, nullable = false)
     @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE)
@@ -44,7 +44,7 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "id_child")
-    private List<Child> children = new ArrayList<>();   // czy lepiej byłoby korzystać z set?
+    private List<Child> children = new ArrayList<>();
 
     public User() {
     }
