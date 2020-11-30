@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +24,12 @@ public class Camp {
     @NotNull
     @NotEmpty
     @DateTimeFormat
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @NotNull
     @NotEmpty
     @DateTimeFormat
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @NotNull
     @NotEmpty
@@ -48,7 +48,7 @@ public class Camp {
     }
 
 
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit) {
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDate startDate, @NotNull @NotEmpty LocalDate endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit) {
         this.campsName = campsName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -56,7 +56,7 @@ public class Camp {
         this.personLimit = personLimit;
     }
 
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit, List<Child> children) {
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDate startDate, @NotNull @NotEmpty LocalDate endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit, List<Child> children) {
         this.campsName = campsName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -81,19 +81,19 @@ public class Camp {
         this.campsName = campsName;
     }
 
-    public LocalDateTime getStartDate() {
+    public @NotNull @NotEmpty LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(@NotNull @NotEmpty LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public @NotNull @NotEmpty LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(@NotNull @NotEmpty LocalDate endDate) {
         this.endDate = endDate;
     }
 
