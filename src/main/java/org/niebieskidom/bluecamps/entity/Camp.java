@@ -3,6 +3,7 @@ package org.niebieskidom.bluecamps.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -34,6 +35,11 @@ public class Camp {
     @NotEmpty
     private String address;
 
+    @NotNull
+    @NotEmpty
+    @Digits(integer = 3, fraction = 0)
+    private Integer personLimit;
+
     @ManyToMany
     @JoinTable(name = "camps_children", joinColumns = @JoinColumn(name = "camp_id"), inverseJoinColumns = @JoinColumn(name = "children_id"))
     private List<Child> children = new ArrayList<>();
@@ -41,18 +47,21 @@ public class Camp {
     public Camp() {
     }
 
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address) {
+
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit) {
         this.campsName = campsName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.address = address;
+        this.personLimit = personLimit;
     }
 
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address, List<Child> children) {
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDateTime startDate, @NotNull @NotEmpty LocalDateTime endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit, List<Child> children) {
         this.campsName = campsName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.address = address;
+        this.personLimit = personLimit;
         this.children = children;
     }
 
@@ -96,6 +105,14 @@ public class Camp {
         this.address = place;
     }
 
+    public Integer getPersonLimit() {
+        return personLimit;
+    }
+
+    public void setPersonLimit(Integer personLimit) {
+        this.personLimit = personLimit;
+    }
+
     public List<Child> getChildren() {
         return children;
     }
@@ -111,7 +128,8 @@ public class Camp {
                 ", campsName='" + campsName + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", place='" + address + '\'' +
+                ", address='" + address + '\'' +
+                ", personLimit=" + personLimit +
                 ", children=" + children +
                 '}';
     }

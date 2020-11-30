@@ -18,7 +18,7 @@ public class CampService {
     }
 
 
-    public List<Camp> getCamps(){
+    public List<Camp> showCamps(){
         return campRepository.findAll();
     }
 

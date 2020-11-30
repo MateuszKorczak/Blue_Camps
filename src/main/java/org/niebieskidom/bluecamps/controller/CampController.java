@@ -15,7 +15,7 @@ public class CampController {
 
     @RequestMapping("/testCamp")
     public Camp testCamp() {
-        return new Camp("Camp's name", LocalDateTime.now().minusDays(4), LocalDateTime.now(), "Mazury");
+        return new Camp("Camp's name", LocalDateTime.now().minusDays(4), LocalDateTime.now(), "Mazury", 90);
     }
 
 
