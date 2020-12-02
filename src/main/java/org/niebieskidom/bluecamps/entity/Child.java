@@ -33,8 +33,7 @@ public class Child {
     private String parentsName2;
 
     @NotNull
-    @NotEmpty
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Past
     private LocalDateTime birthDate;
 
@@ -83,7 +82,7 @@ public class Child {
     public Child() {
     }
 
-    public Child(@NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, @NotNull @NotEmpty Character sex, @NotNull @NotEmpty String parentsName1, String parentsName2, @NotNull @NotEmpty @Past LocalDateTime birthDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty String parentsAddress, @NotNull @NotEmpty @Pattern(regexp = "\\d{9}", flags = Pattern.Flag.UNICODE_CASE) String parentsPhoneNumber, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE) String parentsEmail, @NotNull @NotEmpty String infoAboutNeeds, @NotNull @NotEmpty String infoAboutHealth, @NotNull @NotEmpty String infoAboutVaccination, @NotNull @NotEmpty @PESEL String pesel, @NotNull @NotEmpty boolean agreement, String paymentStatus) {
+    public Child(@NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, @NotNull @NotEmpty Character sex, @NotNull @NotEmpty String parentsName1, String parentsName2, @NotNull @Past LocalDateTime birthDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty String parentsAddress, @NotNull @NotEmpty @Pattern(regexp = "\\d{9}", flags = Pattern.Flag.UNICODE_CASE) String parentsPhoneNumber, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE) String parentsEmail, @NotNull @NotEmpty String infoAboutNeeds, @NotNull @NotEmpty String infoAboutHealth, @NotNull @NotEmpty String infoAboutVaccination, @NotNull @NotEmpty @PESEL String pesel, @NotNull @NotEmpty boolean agreement, String paymentStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;

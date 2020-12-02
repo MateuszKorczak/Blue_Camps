@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,20 +24,17 @@ public class Camp {
 
     @NotNull
     @NotEmpty
-    @DateTimeFormat
-    private LocalDate startDate;
-
-    @NotNull
-    @NotEmpty
-    @DateTimeFormat
-    private LocalDate endDate;
-
-    @NotNull
-    @NotEmpty
     private String address;
 
     @NotNull
-    @NotEmpty
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date startDate;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date endDate;
+
+    @NotNull
     @Digits(integer = 3, fraction = 0)
     private Integer personLimit;
 
@@ -47,20 +45,19 @@ public class Camp {
     public Camp() {
     }
 
-
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDate startDate, @NotNull @NotEmpty LocalDate endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit) {
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty String address, @NotNull Date startDate, @NotNull Date endDate, @NotNull @Digits(integer = 3, fraction = 0) Integer personLimit) {
         this.campsName = campsName;
+        this.address = address;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.address = address;
         this.personLimit = personLimit;
     }
 
-    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty LocalDate startDate, @NotNull @NotEmpty LocalDate endDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty @Digits(integer = 3, fraction = 0) Integer personLimit, List<Child> children) {
+    public Camp(@NotNull @NotEmpty String campsName, @NotNull @NotEmpty String address, @NotNull Date startDate, @NotNull Date endDate, @NotNull @Digits(integer = 3, fraction = 0) Integer personLimit, List<Child> children) {
         this.campsName = campsName;
+        this.address = address;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.address = address;
         this.personLimit = personLimit;
         this.children = children;
     }
@@ -81,28 +78,28 @@ public class Camp {
         this.campsName = campsName;
     }
 
-    public @NotNull @NotEmpty LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(@NotNull @NotEmpty LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public @NotNull @NotEmpty LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(@NotNull @NotEmpty LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String place) {
-        this.address = place;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Integer getPersonLimit() {
@@ -126,9 +123,9 @@ public class Camp {
         return "Camp{" +
                 "id=" + id +
                 ", campsName='" + campsName + '\'' +
+                ", address='" + address + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", address='" + address + '\'' +
                 ", personLimit=" + personLimit +
                 ", children=" + children +
                 '}';

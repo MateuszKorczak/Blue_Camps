@@ -23,8 +23,7 @@ public class CampService {
     }
 
     public Optional<Camp> getCamp(Long id){
-        Optional<Camp> optionalCamp = campRepository.findById(id);
-        return optionalCamp;
+        return campRepository.findById(id);
     }
 
     public void addCamp(Camp camp){
