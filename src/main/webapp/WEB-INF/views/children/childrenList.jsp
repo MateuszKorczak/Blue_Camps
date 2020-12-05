@@ -1,16 +1,74 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mateusz
-  Date: 30.11.2020
-  Time: 20:02
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Lista dzieci</title>
+    <link href="<c:url value="../../css/style.css" />" rel="stylesheet">
 </head>
 <body>
-
+<div class="container">
+    <table class="table">
+        <thead>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Płeć</th>
+        <th>Imiona rodziców</th>
+        <th>Data urodzenia</th>
+        <th>Adres</th>
+        <th>Adres rodzica</th>
+        <th>Numer kontaktowy</th>
+        <th>Email rodzica</th>
+        <th>Specjalne potrzeby</th>
+        <th>Informacje dotyczące zdrowia</th>
+        <th>Informacje dotyczące szczepień</th>
+        <th>PESEL</th>
+        <th>Zgoda</th>
+        <th>Status płatności</th>
+        <th>Edycja</th>
+        </thead>
+        <tbody>
+        <c:forEach items="${children}" var="child">
+            <tr>
+                <td><c:out value="${child.firstName}"/></td>
+                <td><c:out value="${child.lastName}"/></td>
+                <td><c:out value="${child.sex}"/></td>
+                <td>
+                    <c:out value="${child.parentsName1}"/><br><br>
+                    <c:out value="${child.parentsName2}"/><br>
+                </td>
+                <td><c:out value="${child.birthDate}"/></td>
+                <td><c:out value="${child.address}"/></td>
+                <td><c:out value="${child.parentsAddress}"/></td>
+                <td><c:out value="${child.parentsPhoneNumber}"/></td>
+                <td><c:out value="${child.parentsEmail}"/></td>
+                <td><c:out value="${child.infoAboutNeeds}"/></td>
+                <td><c:out value="${child.infoAboutHealth}"/></td>
+                <td><c:out value="${child.infoAboutVaccination}"/></td>
+                <td><c:out value="${child.pesel}"/></td>
+                <td><c:out value="${child.agreement}"/></td>
+                <td><c:out value="${child.paymentStatus}"/></td>
+                <td>
+                    <form method="POST" action="/child/edit">
+                        <input name="id" value="${child.id}" hidden>
+                        <button type="submit">Zmień</button>
+                    </form>
+                    <form method="POST" action="/child/delete">
+                        <input name="id" value="${child.id}" hidden>
+                        <button type="submit">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <form method="GET" action="/child/add">
+        <button type="submit">Dodaj dziecko</button>
+    </form>
+    </form>
+    <form action="/">
+        <button type="submit">Wróć do strony głównej</button>
+    </form>
+</div>
 </body>
 </html>

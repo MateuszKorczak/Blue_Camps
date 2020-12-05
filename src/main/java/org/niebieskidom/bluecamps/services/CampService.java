@@ -34,6 +34,7 @@ public class CampService {
         campRepository.deleteById(id);
     }
 
+
     public void updateCamp(Camp camp){
         campRepository.save(camp);
     }

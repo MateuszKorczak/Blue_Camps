@@ -1,12 +1,12 @@
 package org.niebieskidom.bluecamps.entity;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,24 +18,25 @@ public class Camp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @NotEmpty
+
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String campsName;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String address;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date startDate;
 
-    @NotNull
+    @NotNull(message = "To pole jest wymagane")
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date endDate;
 
     @NotNull
-    @Digits(integer = 3, fraction = 0)
+    @Range(min = 15, max = 300, message = "Liczba musi mieścić się w zakresie 15-300.")
     private Integer personLimit;
 
     @ManyToMany

@@ -31,8 +31,7 @@
         <form:label path="personLimit">Limit osób:</form:label>
         <form:input type="number" path="personLimit"/>
         <form:errors path="personLimit" cssClass="error"/><br>
-
-        <button type="submit">Dodaj</button>
+        <button type="submit">Zapisz</button>
     </form:form>
 </div>
 </body>

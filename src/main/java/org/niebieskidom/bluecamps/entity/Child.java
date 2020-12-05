@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "children")
@@ -15,49 +15,45 @@ public class Child {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String lastName;
 
-    @NotNull
-    @NotEmpty
     private Character sex;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String parentsName1;
     private String parentsName2;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Past
-    private LocalDateTime birthDate;
+    @Past(message = "Data musi być starsza niż dzisiaj")
+    private Date birthDate;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String address;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     private String parentsAddress;
 
-    @NotNull
-    @NotEmpty
-    @Pattern(regexp = "\\d{9}", flags = Pattern.Flag.UNICODE_CASE)
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
+    @Pattern(regexp = "[0-9]{3}-[0-9]{3}-[0-9]{3}", flags = Pattern.Flag.UNICODE_CASE, message = "Podaj nr telefonu zgodny z wzorem")
     private String parentsPhoneNumber;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "To pole jest wymagane")
+    @NotEmpty(message = "To pole jest wymagane")
     @Email
-    @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE)
+    @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE, message = "Podaj adres email zgodny z wzorem")
     private String parentsEmail;
 
-    @NotNull
-    @NotEmpty
     private String infoAboutNeeds;
 
     @NotNull
@@ -70,19 +66,18 @@ public class Child {
 
     @NotNull
     @NotEmpty
-    @PESEL
+    @PESEL (message = "Podaj prawidłowy nr PESEL")
     private String pesel;
 
-    @NotNull
-    @NotEmpty
-    private boolean agreement;
+    @AssertTrue(message = "Zgoda jest wymagana")
+    private boolean agreement = true;
 
     private String paymentStatus;
 
     public Child() {
     }
 
-    public Child(@NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, @NotNull @NotEmpty Character sex, @NotNull @NotEmpty String parentsName1, String parentsName2, @NotNull @Past LocalDateTime birthDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty String parentsAddress, @NotNull @NotEmpty @Pattern(regexp = "\\d{9}", flags = Pattern.Flag.UNICODE_CASE) String parentsPhoneNumber, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE) String parentsEmail, @NotNull @NotEmpty String infoAboutNeeds, @NotNull @NotEmpty String infoAboutHealth, @NotNull @NotEmpty String infoAboutVaccination, @NotNull @NotEmpty @PESEL String pesel, @NotNull @NotEmpty boolean agreement, String paymentStatus) {
+    public Child(@NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, Character sex, @NotNull @NotEmpty String parentsName1, String parentsName2, @NotNull @Past Date birthDate, @NotNull @NotEmpty String address, @NotNull @NotEmpty String parentsAddress, @NotNull @NotEmpty @Pattern(regexp = "\\d{9}", flags = Pattern.Flag.UNICODE_CASE) String parentsPhoneNumber, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE) String parentsEmail,  String infoAboutNeeds, @NotNull @NotEmpty String infoAboutHealth, @NotNull @NotEmpty String infoAboutVaccination, @NotNull @NotEmpty @PESEL String pesel, @AssertTrue boolean agreement, String paymentStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
@@ -149,11 +144,11 @@ public class Child {
         this.parentsName2 = parentsName2;
     }
 
-    public LocalDateTime getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
