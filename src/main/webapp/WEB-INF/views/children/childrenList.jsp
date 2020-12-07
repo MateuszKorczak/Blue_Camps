@@ -62,6 +62,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <br>
     <form method="GET" action="/child/add">
         <button type="submit">Dodaj dziecko</button>
     </form>
@@ -69,6 +70,13 @@
     <form action="/">
         <button type="submit">Wróć do strony głównej</button>
     </form>
+
+    <form action="<c:url value="/logout"/>" method="post">
+        <input class="fa fa-id-badge" type="submit" value="Wyloguj">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+
+
 </div>
 </body>
 </html>

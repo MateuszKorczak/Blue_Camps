@@ -3,41 +3,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Lista obozów</title>
+    <title>Lista użytkowników</title>
     <link href="<c:url value="../../css/style.css" />" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <table class="table">
         <thead>
-        <th>Nazwa obozu</th>
-        <th>Adres</th>
-        <th>Data rozpoczęcia</th>
-        <th>Data zakończenia</th>
-        <th>Limit osób</th>
+        <th>Login</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Email</th>
+        <th>Hasło</th>
         <th>Lista dzieci</th>
         <th>Edycja</th>
         </thead>
         <tbody>
-        <c:forEach items="${camps}" var="camp">
+        <c:forEach items="${users}" var="user">
             <tr>
-                <td><c:out value="${camp.campsName}"/></td>
-                <td><c:out value="${camp.address}"/></td>
-                <td><c:out value="${camp.startDate}"/></td>
-                <td><c:out value="${camp.endDate}"/></td>
-                <td><c:out value="${camp.personLimit}"/></td>
+                <td><c:out value="${user.login}"/></td>
+                <td><c:out value="${user.firstName}"/></td>
+                <td><c:out value="${user.lastName}"/></td>
+                <td><c:out value="${user.email}"/></td>
+                <td><c:out value="${user.password}"/></td>
                 <td>
-                    <form action="/child/list">
-                            <%--                        <input name="id" value="${camp.children}" hidden>--%>
+                    <form  action="/child/list">
+<%--                        <input name="id" value="${camp.children}" hidden>--%>
                         <button type="submit">Pokaż listę dzieci</button>
                     </form>
                 </td>
                 <td>
-                    <form method="POST" action="/camp/edit">
+                    <form method="POST" action="/user/edit">
                         <input name="id" value="${camp.id}" hidden>
                         <button type="submit">Zmień</button>
                     </form>
-                    <form method="POST" action="/camp/delete">
+                    <form method="POST" action="/user/delete">
                         <input name="id" value="${camp.id}" hidden>
                         <button type="submit">Usuń</button>
                     </form>
@@ -47,14 +47,13 @@
         </tbody>
     </table>
     <br>
-    <form method="GET" action="/camp/add">
-        <button type="submit">Dodaj nowy obóz</button>
+    <form method="GET" action="/user/add">
+        <button type="submit">Dodaj nowego użytkownika</button>
     </form>
     </form>
     <form action="/">
         <button type="submit">Wróć do strony głównej</button>
     </form>
-
 
     <form action="<c:url value="/logout"/>" method="post">
         <input class="fa fa-id-badge" type="submit" value="Wyloguj">

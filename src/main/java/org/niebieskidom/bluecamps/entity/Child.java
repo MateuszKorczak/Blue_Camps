@@ -2,6 +2,7 @@ package org.niebieskidom.bluecamps.entity;
 
 import org.hibernate.validator.constraints.pl.PESEL;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -9,47 +10,50 @@ import java.util.Date;
 
 @Entity
 @Table(name = "children")
+@Secured({"ROLE_USER", "ROLE_ADMIN"})
 public class Child {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String firstName;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String lastName;
 
     private Character sex;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String parentsName1;
     private String parentsName2;
 
     @NotNull
+    @Basic
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Past(message = "Data musi być starsza niż dzisiaj")
-    private Date birthDate;
+    @Past
+    private java.util.Date birthDate;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String address;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String parentsAddress;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     @Pattern(regexp = "[0-9]{3}-[0-9]{3}-[0-9]{3}", flags = Pattern.Flag.UNICODE_CASE, message = "Podaj nr telefonu zgodny z wzorem")
     private String parentsPhoneNumber;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     @Email
     @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE, message = "Podaj adres email zgodny z wzorem")
     private String parentsEmail;
@@ -66,11 +70,11 @@ public class Child {
 
     @NotNull
     @NotEmpty
-    @PESEL (message = "Podaj prawidłowy nr PESEL")
+    @PESEL
     private String pesel;
 
     @AssertTrue(message = "Zgoda jest wymagana")
-    private boolean agreement = true;
+    private boolean agreement;
 
     private String paymentStatus;
 

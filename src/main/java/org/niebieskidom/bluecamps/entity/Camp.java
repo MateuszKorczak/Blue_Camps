@@ -2,6 +2,7 @@ package org.niebieskidom.bluecamps.entity;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -13,27 +14,32 @@ import java.util.List;
 
 @Entity
 @Table(name = "camps")
+@Secured("ROLE_ADMIN")
 public class Camp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String campsName;
 
-    @NotNull(message = "To pole jest wymagane")
-    @NotEmpty(message = "To pole jest wymagane")
+    @NotNull
+    @NotEmpty
     private String address;
 
     @NotNull
+    @Basic
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date startDate;
+    private java.util.Date startDate;
 
-    @NotNull(message = "To pole jest wymagane")
+    @NotNull
+    @Basic
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date endDate;
+    private java.util.Date endDate;
 
     @NotNull
     @Range(min = 15, max = 300, message = "Liczba musi mieścić się w zakresie 15-300.")
