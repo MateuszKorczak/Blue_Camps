@@ -1,36 +1,65 @@
 package org.niebieskidom.bluecamps.controller;
 
 import org.niebieskidom.bluecamps.entity.Child;
+import org.niebieskidom.bluecamps.entity.Role;
 import org.niebieskidom.bluecamps.entity.User;
+import org.niebieskidom.bluecamps.repositories.RoleRepository;
 import org.niebieskidom.bluecamps.services.ChildService;
 import org.niebieskidom.bluecamps.services.UserService;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
-@Secured({"ROLE_USER", "ROLE_ADMIN"})
+//@Secured({"ROLE_USER", "ROLE_ADMIN"})
 public class UserController {
-    private UserService userService;
+
+    private final UserService userService;
     private final ChildService childService;
+    private final RoleRepository roleRepository;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public UserController(UserService userService, ChildService childService) {
+    public UserController(UserService userService, ChildService childService, RoleRepository roleRepository) {
         this.userService = userService;
         this.childService = childService;
+        this.roleRepository = roleRepository;
     }
 
     @ModelAttribute("children")
     public List<Child> children() {
         return childService.getChildren();
     }
+
+
+    @GetMapping("/admin")
+    @ResponseBody
+    public String userInfo(@AuthenticationPrincipal UserDetails customUser) {
+//        log.info("customUser class {} " , customUser.getClass());
+        return "You are logged as " + customUser;
+    }
+
+//    @GetMapping("/admin")
+//    @ResponseBody
+//    public String admin(@AuthenticationPrincipal CurrentUser customUser) {
+//        User entityUser = customUser.getUser();
+//        return "Hello " + entityUser.getUsername();
+//    }
+
+
+
+
 
 
     @GetMapping("/all")
@@ -47,15 +76,43 @@ public class UserController {
     }
 
 
+//    @PostMapping("/add")
+//    public String addUser(@Valid User user, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "users/userForm";
+//        } else {
+//            userService.saveUser(user);
+//            return "redirect:/user/all";
+//        }
+//    }
+
     @PostMapping("/add")
-    public String addUser(@Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "users/userForm";
-        } else {
-            userService.addUser(user);
-            return "redirect:/user/all";
+    public String addUser(@Valid User user, BindingResult bindingResult){
+        List<User> users = userService.showUsers();
+        for(User u : users){
+            if (u.getUsername().equals(user.getUsername())){
+                FieldError error = new FieldError("user", "username", "Nazwa użytkownika już istnieje w bazie danych");
+                bindingResult.addError(error);
+            }
         }
+        if(bindingResult.hasErrors()){
+            return "users/userForm";
+        }else {
+            Set<Role> roles = new HashSet<>();
+            Role role = roleRepository.findByName("ROLE_USER");
+            roles.add(role);
+            user.setEnabled(1);
+            user.setRoles(roles);
+            String password = user.getPassword();
+            String hashPassword = bCryptPasswordEncoder.encode(password);
+            user.setPassword(hashPassword);
+            userService.saveUser(user);
+        }
+        return "home";
     }
+
+
+
 
     @PostMapping("/edit")
     public String editUser(Model model, @RequestParam long id) {

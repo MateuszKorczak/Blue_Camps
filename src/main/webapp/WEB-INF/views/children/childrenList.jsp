@@ -49,7 +49,7 @@
                 <td><c:out value="${child.agreement}"/></td>
                 <td><c:out value="${child.paymentStatus}"/></td>
                 <td>
-                    <form method="POST" action="/child/edit">
+                    <form method="POST" action="${pageContext.request.contextPath}/child/edit">
                         <input name="id" value="${child.id}" hidden>
                         <button type="submit">Zmień</button>
                     </form>

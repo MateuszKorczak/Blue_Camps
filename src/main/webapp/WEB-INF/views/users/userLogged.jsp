@@ -4,7 +4,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Home Page</title>
+    <title>Zalogowany</title>
     <link href="<c:url value="../../css/style.css" />" rel="stylesheet">
 </head>
 
@@ -12,8 +12,19 @@
 <div class="container">
     <h1>Witaj na stronie</h1>
     <br>
-    <form action="/users/userLogged">
-        <button type="submit">Zaloguj się</button>
+
+    <sec:authorize access="hasRole('ADMIN')">
+        MAM ROLE ADMIN
+        <form action="/camp/all">
+            <button type="submit">Obozy</button>
+        </form>
+    </sec:authorize>
+
+    <form action="/child/list">
+        <button type="submit">Dzieci</button>
+    </form>
+    <form action="/user/all">
+        <button type="submit">Użytkownicy</button>
     </form>
 </div>
 </body>

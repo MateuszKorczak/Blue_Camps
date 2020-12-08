@@ -1,5 +1,7 @@
 package org.niebieskidom.bluecamps.entity;
 
+
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -15,23 +18,22 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotEmpty
     @Column(nullable = false, unique = true, length = 60)
-    @Pattern(regexp = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$", flags = Pattern.Flag.UNICODE_CASE)
-    private String login;
+//    @Pattern(regexp = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$", flags = Pattern.Flag.UNICODE_CASE)
+    private String username;
 
-    // metoda 1 - moja
-    @NotNull
-    @NotEmpty
-    @Pattern(regexp = "((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,20})", flags = Pattern.Flag.UNICODE_CASE)
-    private String password = BCrypt.hashpw("", BCrypt.gensalt());
-    // metoda 2 ze slajdów
-    //    private String password;
+    //    // metoda 1 - moja
+//    @NotNull
+//    @NotEmpty
+//    @Pattern(regexp = "((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,20})", flags = Pattern.Flag.UNICODE_CASE)
+//    private String password = BCrypt.hashpw("", BCrypt.gensalt());
+    //    // metoda 2 - ze skryptu.
+    private String password;
 
     private int enabled;
 
@@ -39,6 +41,70 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Imię musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych")
+    private String firstName;
+
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Nazwisko musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych")
+    private String lastName;
+
+    @NotNull
+    @NotEmpty
+    @Email
+    @Column(unique = true, nullable = false)
+    @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE)
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_child", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "child_id"))
+    private List<Child> children = new ArrayList<>();
+
+    public User(String username, String password, int enabled, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Imię musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String firstName, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Nazwisko musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String lastName, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE) String email) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User() {
+
+    }
+
+//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//        this.username = username;
+//        this.password = password;
+//    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public int getEnabled() {
         return enabled;
@@ -54,54 +120,6 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @NotNull
-    @NotEmpty
-    private String firstName;
-
-    @NotNull
-    @NotEmpty
-    private String lastName;
-
-    @NotNull
-    @NotEmpty
-    @Email
-    @Column(unique = true, nullable = false)
-    @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE)
-    private String email;
-
-
-    @OneToMany
-    @JoinColumn(name = "id_child")
-    private List<Child> children = new ArrayList<>();
-
-    public User() {
-    }
-
-    public User(@NotNull(message = "Login is mandatory") @NotEmpty(message = "Login is mandatory") String login, @NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, @NotNull(message = "Email is mandatory") @NotEmpty(message = "Email is mandatory") @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}", flags = Pattern.Flag.UNICODE_CASE) String email, @NotNull(message = "Password is mandatory") @NotEmpty(message = "Password is mandatory") @Pattern(regexp = "((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,20})", flags = Pattern.Flag.UNICODE_CASE) String password, List<Child> children) {
-        this.login = login;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.children = children;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getFirstName() {
@@ -128,31 +146,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<Child> getChildren() {
         return children;
     }
 
     public void setChildren(List<Child> children) {
         this.children = children;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

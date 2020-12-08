@@ -45,9 +45,10 @@ public class Camp {
     @Range(min = 15, max = 300, message = "Liczba musi mieścić się w zakresie 15-300.")
     private Integer personLimit;
 
-    @ManyToMany
-    @JoinTable(name = "camps_children", joinColumns = @JoinColumn(name = "camp_id"), inverseJoinColumns = @JoinColumn(name = "children_id"))
-    private List<Child> children = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "camp_children", joinColumns = @JoinColumn(name = "camp_id"),
+            inverseJoinColumns = @JoinColumn(name = "children_id"))
+    private List<Child> children;
 
     public Camp() {
     }

@@ -3,8 +3,15 @@
          pageEncoding="UTF-8" %>
 <head>
     <title>Security with Spring Boot</title>
+    <link href="<c:url value="../../css/style.css" />" rel="stylesheet">
 </head>
 <body>
-<h1>Dostęp zabroniony</h1>
+<div class="container">
+    <h1>Dostęp zabroniony</h1>
+    <br>
+    <form action="/">
+        <button type="submit">Wróć do strony głównej</button>
+    </form>
+</div>
 </body>
 </html>

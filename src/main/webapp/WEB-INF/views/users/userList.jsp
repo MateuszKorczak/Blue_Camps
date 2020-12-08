@@ -21,11 +21,11 @@
         <tbody>
         <c:forEach items="${users}" var="user">
             <tr>
-                <td><c:out value="${user.login}"/></td>
+                <td><c:out value="${user.username}"/></td>
                 <td><c:out value="${user.firstName}"/></td>
                 <td><c:out value="${user.lastName}"/></td>
                 <td><c:out value="${user.email}"/></td>
-                <td><c:out value="${user.password}"/></td>
+                <td><c:out value="${user.roles}"/></td>
                 <td>
                     <form  action="/child/list">
 <%--                        <input name="id" value="${camp.children}" hidden>--%>
@@ -34,11 +34,11 @@
                 </td>
                 <td>
                     <form method="POST" action="/user/edit">
-                        <input name="id" value="${camp.id}" hidden>
+                        <input name="id" value="${user.id}" hidden>
                         <button type="submit">Zmień</button>
                     </form>
                     <form method="POST" action="/user/delete">
-                        <input name="id" value="${camp.id}" hidden>
+                        <input name="id" value="${user.id}" hidden>
                         <button type="submit">Usuń</button>
                     </form>
                 </td>
