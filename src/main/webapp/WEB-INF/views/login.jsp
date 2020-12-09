@@ -11,9 +11,9 @@
 <div class="container">
     <h1>Zaloguj się</h1>
     <form method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
+        <div><label> Nazwa użytkownika : <input type="text" name="username"/> </label></div>
+        <div><label> Hasło: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Zaloguj się"/></div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </div>

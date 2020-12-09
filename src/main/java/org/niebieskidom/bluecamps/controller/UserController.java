@@ -6,6 +6,9 @@ import org.niebieskidom.bluecamps.entity.User;
 import org.niebieskidom.bluecamps.repositories.RoleRepository;
 import org.niebieskidom.bluecamps.services.ChildService;
 import org.niebieskidom.bluecamps.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,9 +25,9 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
-//@Secured({"ROLE_USER", "ROLE_ADMIN"})
 public class UserController {
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final ChildService childService;
     private final RoleRepository roleRepository;
@@ -46,21 +49,9 @@ public class UserController {
     @GetMapping("/admin")
     @ResponseBody
     public String userInfo(@AuthenticationPrincipal UserDetails customUser) {
-//        log.info("customUser class {} " , customUser.getClass());
+        logger.info("customUser class {} " , customUser.getClass());
         return "You are logged as " + customUser;
     }
-
-//    @GetMapping("/admin")
-//    @ResponseBody
-//    public String admin(@AuthenticationPrincipal CurrentUser customUser) {
-//        User entityUser = customUser.getUser();
-//        return "Hello " + entityUser.getUsername();
-//    }
-
-
-
-
-
 
     @GetMapping("/all")
     public String showAllUsers(Model model) {

@@ -1,4 +1,4 @@
-html,
+/*html,*/
 h1{
     font-size: 30px;
     color: #fff;
@@ -28,8 +28,8 @@ body {
 }
 .container {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    /*top: 50%;*/
+    /*left: 50%;*/
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }

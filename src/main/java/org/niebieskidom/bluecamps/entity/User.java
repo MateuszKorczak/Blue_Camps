@@ -77,10 +77,10 @@ public class User {
 
     }
 
-//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//        this.username = username;
-//        this.password = password;
-//    }
+    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

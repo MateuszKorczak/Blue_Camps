@@ -9,6 +9,7 @@ import org.niebieskidom.bluecamps.services.ChildService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -55,6 +56,10 @@ public class CampController {
 
     @PostMapping("/add")
     public String addCamp(@Valid Camp camp, BindingResult bindingResult) {
+        if (camp.getStartDate().after(camp.getEndDate())) {
+            FieldError error = new FieldError("startDate", "endDate", "Data końcowa obozu nie może być wcześniejsza niż data początkowa");
+            bindingResult.addError(error);
+        }
         if (bindingResult.hasErrors()) {
             return "camps/campForm";
         } else {
@@ -62,6 +67,7 @@ public class CampController {
             return "redirect:/camp/all";
         }
     }
+
 
     @PostMapping("/edit")
     public String editCamp(Model model, @RequestParam long id) {
@@ -81,7 +87,7 @@ public class CampController {
     public String executeDeleteCamp(@RequestParam Long id) {
         Optional<Camp> optionalCamp = campService.getCamp(id);
         Camp camp = optionalCamp.orElse(null);
-        if (camp ==null){                   //dodaj obsługę błędu
+        if (camp == null) {                   //dodaj obsługę błędu
             return "have problems";
         }
         campService.deleteCamp(id);

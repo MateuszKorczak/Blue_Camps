@@ -21,7 +21,6 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     }
 
     @Override
-//    public UserDetails loadUserByUsername(String username) {
     public UserDetails loadUserByUsername(String username) {
         User user = userService.findByUserName(username);
         if (user == null) {
@@ -34,5 +33,6 @@ public class SpringDataUserDetailsService implements UserDetailsService {
 //                user.getUsername(), user.getPassword(), grantedAuthorities);
         return (UserDetails) new CurrentUser(user.getUsername(),user.getPassword(),
                 grantedAuthorities, user);
+
     }
 }

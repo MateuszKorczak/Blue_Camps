@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +68,8 @@ public class Camp {
         this.personLimit = personLimit;
         this.children = children;
     }
+
+//    Getters and setters
 
     public Long getId() {
         return id;
