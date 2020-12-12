@@ -49,6 +49,10 @@ public class Camp {
             inverseJoinColumns = @JoinColumn(name = "children_id"))
     private List<Child> children;
 
+
+
+//    constructor
+
     public Camp() {
     }
 

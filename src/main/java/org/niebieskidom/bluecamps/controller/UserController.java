@@ -1,14 +1,12 @@
 package org.niebieskidom.bluecamps.controller;
 
-import org.niebieskidom.bluecamps.entity.Child;
-import org.niebieskidom.bluecamps.entity.Role;
-import org.niebieskidom.bluecamps.entity.User;
+import org.niebieskidom.bluecamps.entity.*;
 import org.niebieskidom.bluecamps.repositories.RoleRepository;
 import org.niebieskidom.bluecamps.services.ChildService;
 import org.niebieskidom.bluecamps.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.scheduling.config.Task;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
@@ -31,13 +30,14 @@ public class UserController {
     private final UserService userService;
     private final ChildService childService;
     private final RoleRepository roleRepository;
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public UserController(UserService userService, ChildService childService, RoleRepository roleRepository) {
+    public UserController(UserService userService, ChildService childService, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.childService = childService;
         this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @ModelAttribute("children")
@@ -49,9 +49,17 @@ public class UserController {
     @GetMapping("/admin")
     @ResponseBody
     public String userInfo(@AuthenticationPrincipal UserDetails customUser) {
-        logger.info("customUser class {} " , customUser.getClass());
+        logger.info("customUser class {} ", customUser.getClass());
         return "You are logged as " + customUser;
     }
+
+    @GetMapping("/adminHello")
+    @ResponseBody
+    public String admin(@AuthenticationPrincipal CurrentUser customUser) {
+        User entityUser = customUser.getUser();
+        return "Hello " + entityUser.getUsername();
+    }
+
 
     @GetMapping("/all")
     public String showAllUsers(Model model) {
@@ -60,6 +68,14 @@ public class UserController {
         return "users/userList";
     }
 
+    @GetMapping("/logged")
+    public String showLoggedUser(@RequestParam String username, Model model) {
+        Optional<User> user = Optional.ofNullable(userService.findByUserName(username));
+        model.addAttribute("user", user);
+        return "users/userLogged";
+    }
+
+
     @GetMapping("/add")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
@@ -67,28 +83,18 @@ public class UserController {
     }
 
 
-//    @PostMapping("/add")
-//    public String addUser(@Valid User user, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "users/userForm";
-//        } else {
-//            userService.saveUser(user);
-//            return "redirect:/user/all";
-//        }
-//    }
-
     @PostMapping("/add")
-    public String addUser(@Valid User user, BindingResult bindingResult){
+    public String addUser(@Valid User user, BindingResult bindingResult) {
         List<User> users = userService.showUsers();
-        for(User u : users){
-            if (u.getUsername().equals(user.getUsername())){
+        for (User u : users) {
+            if (u.getUsername().equals(user.getUsername())) {
                 FieldError error = new FieldError("user", "username", "Nazwa użytkownika już istnieje w bazie danych");
                 bindingResult.addError(error);
             }
         }
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "users/userForm";
-        }else {
+        } else {
             Set<Role> roles = new HashSet<>();
             Role role = roleRepository.findByName("ROLE_USER");
             roles.add(role);
@@ -99,10 +105,8 @@ public class UserController {
             user.setPassword(hashPassword);
             userService.saveUser(user);
         }
-        return "home";
+        return "redirect:/user/all";
     }
-
-
 
 
     @PostMapping("/edit")
@@ -125,9 +129,11 @@ public class UserController {
         User user = optionalUser.orElse(null);
         if (user == null) {                   //dodaj obsługę błędu
             return "have problems";
+        } else {
+            userService.deleteUser(id);
+            return "redirect:/user/all";
         }
-        userService.deleteUser(id);
-        return "redirect:/user/all";
     }
+
 
 }

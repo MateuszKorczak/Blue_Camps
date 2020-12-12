@@ -1,4 +1,4 @@
-/*html,*/
+html,
 h1{
     font-size: 30px;
     color: #fff;
@@ -28,11 +28,19 @@ body {
 }
 .container {
     position: absolute;
-    /*top: 50%;*/
-    /*left: 50%;*/
+    top: 50%;
+    left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+.containerList {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
 table {
     width: available;
     border-collapse: collapse;

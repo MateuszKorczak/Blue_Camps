@@ -7,10 +7,7 @@ import org.niebieskidom.bluecamps.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,12 +50,25 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteUser(Long id) {
+        Optional<User> optionalUser = getUser(id);
+        User user = optionalUser.orElse(null);
+        Set<Role> setRole = user.getRoles();
+        roleRepository.deleteAll(setRole);
         userRepository.deleteById(id);
     }
 
+
     @Override
     public void updateUser(User user) {
-        userRepository.save(user);
+        Optional<User> entity = userRepository.findById(user.getId());
+        if (entity.isPresent()) {
+            User updatedUser = entity.get();
+            if (!user.getPassword().equals(updatedUser.getPassword())) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            userRepository.save(user);
+        }
     }
+
 
 }

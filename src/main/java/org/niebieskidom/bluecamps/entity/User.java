@@ -2,7 +2,6 @@ package org.niebieskidom.bluecamps.entity;
 
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,12 +26,7 @@ public class User {
 //    @Pattern(regexp = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$", flags = Pattern.Flag.UNICODE_CASE)
     private String username;
 
-    //    // metoda 1 - moja
-//    @NotNull
-//    @NotEmpty
-//    @Pattern(regexp = "((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,20})", flags = Pattern.Flag.UNICODE_CASE)
-//    private String password = BCrypt.hashpw("", BCrypt.gensalt());
-    //    // metoda 2 - ze skryptu.
+
     private String password;
 
     private int enabled;
@@ -62,16 +56,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_child", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "child_id"))
-    private List<Child> children = new ArrayList<>();
+    private List<Child> children;
 
-    public User(String username, String password, int enabled, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Imię musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String firstName, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Nazwisko musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String lastName, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE) String email) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
+//    constructor
 
     public User() {
 
@@ -81,6 +68,27 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    public User(String username, String password, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Imię musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String firstName, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Nazwisko musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String lastName, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE) String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User(String username, String password, int enabled, Set<Role> roles, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Imię musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String firstName, @NotNull @NotEmpty @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Nazwisko musi zaczynać się Wielką literą. Nie może składać się z cyfr ani znaków specjalnych") String lastName, @NotNull @NotEmpty @Email @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,})", flags = Pattern.Flag.UNICODE_CASE) String email, List<Child> children) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.roles = roles;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.children = children;
+    }
+
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -153,4 +161,5 @@ public class User {
     public void setChildren(List<Child> children) {
         this.children = children;
     }
+
 }

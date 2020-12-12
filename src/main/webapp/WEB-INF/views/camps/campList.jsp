@@ -50,6 +50,11 @@
     <form method="GET" action="/camp/add">
         <button type="submit">Dodaj nowy obóz</button>
     </form>
+    <form method="GET" action="/camp/campList-by-date">
+        <button type="submit">Pokaż obozy z przedziału czasu</button>
+        <input type="date" name="startDate" value="${startDate}">
+        <input type="date" name="endDate" value="${endDate}">
+    </form>
     </form>
     <form action="/">
         <button type="submit">Wróć do strony głównej</button>

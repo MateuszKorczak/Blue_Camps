@@ -17,7 +17,7 @@
         <form:errors path="campsName" cssClass="error" element="div"/><br>
 
         <form:label path="startDate">Data rozpoczęcia obozu:</form:label>
-        <form:input type="date" path="startDate"/>
+        <form:input type="date" path="startDate" />
         <form:errors path="startDate" cssClass="error" element="div"/><br>
 
         <form:label path="endDate">Data zakończenia obozu:</form:label>

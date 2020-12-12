@@ -14,7 +14,6 @@
         <th>Imię</th>
         <th>Nazwisko</th>
         <th>Email</th>
-        <th>Hasło</th>
         <th>Lista dzieci</th>
         <th>Edycja</th>
         </thead>
@@ -25,7 +24,6 @@
                 <td><c:out value="${user.firstName}"/></td>
                 <td><c:out value="${user.lastName}"/></td>
                 <td><c:out value="${user.email}"/></td>
-                <td><c:out value="${user.roles}"/></td>
                 <td>
                     <form  action="/child/list">
 <%--                        <input name="id" value="${camp.children}" hidden>--%>

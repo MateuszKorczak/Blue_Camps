@@ -3,34 +3,36 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Formularz obozu</title>
+    <title>Formularz użytkownika</title>
     <link href="<c:url value="../../css/style.css" />" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h1>Dodawanie obozu</h1>
-    <form:form modelAttribute="camp" method="post" action="/camp/add">
+    <h1>Dodawanie użytkownika</h1>
+    <form:form modelAttribute="user" method="post" action="/user/add">
         <form:hidden path="id"/>
 
-        <form:label path="campsName">Rodzaj wypoczynku:</form:label>
-        <form:input path="campsName"/>
-        <form:errors path="campsName" cssClass="error" element="div"/><br>
+        <form:label path="username">Nazwa użytkownika</form:label>
+        <form:input path="username"/>
+        <form:errors path="username" cssClass="error" element="div"/><br>
 
-        <form:label path="startDate">Data rozpoczęcia obozu:</form:label>
-        <form:input type="date" path="startDate"/>
-        <form:errors path="startDate" cssClass="error" element="div"/><br>
+        <form:label path="password">Hasło:</form:label>
+        <form:input type="password" path="password"/>
+        <form:errors path="password" cssClass="error" element="div"/><br>
 
-        <form:label path="endDate">Data zakończenia obozu:</form:label>
-        <form:input type="date" path="endDate"/>
-        <form:errors path="endDate" cssClass="error" element="div"/><br>
+        <form:label path="firstName">Imię:</form:label>
+        <form:input path="firstName"/>
+        <form:errors path="firstName" cssClass="error" element="div"/><br>
 
-        <form:label path="address">Adres:</form:label>
-        <form:input path="address"/>
-        <form:errors path="address" cssClass="error" element="div"/><br>
+        <form:label path="lastName">Nazwisko:</form:label>
+        <form:input path="lastName"/>
+        <form:errors path="lastName" cssClass="error" element="div"/><br>
 
-        <form:label path="personLimit">Limit osób:</form:label>
-        <form:input type="number" path="personLimit"/>
-        <form:errors path="personLimit" cssClass="error" element="div"/><br>
+        <form:label path="email">Email:</form:label>
+        <form:input path="email"/>
+        <form:errors path="email" cssClass="error" element="div"/><br>
+
+
         <button type="submit">Zapisz</button>
     </form:form>
 </div>

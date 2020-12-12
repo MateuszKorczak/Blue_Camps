@@ -77,9 +77,11 @@
 
         <form:checkbox path="agreement"/>
         <form:label path="agreement">
-        Wyrażam zgodę na przetwarzanie danych osobowych zawartych w karcie kwalifikacyjnej na potrzeby
-        niezbędne do zapewnienia bezpieczeństwa i ochrony zdrowia uczestnika wypoczynku (zgodnie z ustawą z dnia
-        29 sierpnia 1997 r. o ochronie danych osobowych (Dz. U. z 2015 r. poz. 2135, z późn. zm.)).</form:label>
+        Wyrażam zgodę
+<%--            na przetwarzanie danych osobowych zawartych w karcie kwalifikacyjnej na potrzeby--%>
+<%--        niezbędne do zapewnienia bezpieczeństwa i ochrony zdrowia uczestnika wypoczynku (zgodnie z ustawą z dnia--%>
+<%--        29 sierpnia 1997 r. o ochronie danych osobowych (Dz. U. z 2015 r. poz. 2135, z późn. zm.)).--%>
+        </form:label>
         <form:errors path="agreement" cssClass="error"/><br>
 
         <form:label path="paymentStatus">Status płatności:</form:label>

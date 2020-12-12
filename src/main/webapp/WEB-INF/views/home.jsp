@@ -12,7 +12,7 @@
 <div class="container">
     <h1>Witaj na stronie</h1>
     <br>
-    <form action="/users/userLogged">
+    <form action="/user/all">
         <button type="submit">Zaloguj się</button>
     </form>
 </div>

@@ -78,6 +78,8 @@ public class Child {
 
     private String paymentStatus;
 
+//    constructor
+
     public Child() {
     }
 
@@ -99,6 +101,8 @@ public class Child {
         this.agreement = agreement;
         this.paymentStatus = paymentStatus;
     }
+
+//    Getters and setters
 
     public Long getId() {
         return id;

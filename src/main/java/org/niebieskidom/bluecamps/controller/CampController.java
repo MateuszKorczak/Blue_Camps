@@ -6,13 +6,14 @@ import org.niebieskidom.bluecamps.repositories.CampRepository;
 import org.niebieskidom.bluecamps.repositories.ChildRepository;
 import org.niebieskidom.bluecamps.services.CampService;
 import org.niebieskidom.bluecamps.services.ChildService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +93,13 @@ public class CampController {
         }
         campService.deleteCamp(id);
         return "redirect:/camp/all";
+    }
+
+    @GetMapping("/campList-by-date/{startDate}/{endDate}")
+    public String listByDateBetween(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate, Model model){
+        List<Camp> camps = campRepository.findCampByStartDateEqualsCurrentYear(startDate,endDate);
+        model.addAttribute("camps",camps);
+        return "camps/campList";
     }
 
 }

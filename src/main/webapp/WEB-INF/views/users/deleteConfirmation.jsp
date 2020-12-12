@@ -9,12 +9,12 @@
 
 <body>
 <div class="container">
-    <h1>Czy na pewno chcesz usunąć ten obóz i wszystkich jego uczestników?</h1>
-    <form method="POST" action="/camp/delete/confirmed">
+    <h1>Czy na pewno chcesz usunąć tego użytkownika</h1>
+    <form method="POST" action="/user/delete/confirmed">
         <input name="id" value="${id}" hidden>
         <button type="submit">Tak, na pewno!</button>
     </form>
-    <form action="/camp/all">
+    <form action="/user/all">
         <button type="submit">Nie, zabierz mnie stąd</button>
     </form>
 </div>

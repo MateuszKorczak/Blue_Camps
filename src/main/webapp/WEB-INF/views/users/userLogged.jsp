@@ -34,8 +34,7 @@
                 <th>Imię</th>
                 <th>Data urodzenia</th>
             </tr>
-            DOKOŃCZ
-            <c:forEach items="${user.children}" var="child">
+            <c:forEach items="${users.children}" var="child">
                 <tr>
                     <td>${child.firstName}</td>
                     <td>${child.birthDate}</td>
