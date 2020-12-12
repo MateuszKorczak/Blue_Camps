@@ -103,4 +103,11 @@ public class CampController {
         return "camps/campList";
     }
 
+    @PostMapping("/children")
+    public String childrenOfCamp( Model model, @RequestParam long id){
+        List<Child> children = childService.findChildrenByCampId(id);
+        model.addAttribute("children",children);
+        return "children/childrenList";
+    }
+
 }

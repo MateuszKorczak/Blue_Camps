@@ -1,8 +1,9 @@
 package org.niebieskidom.bluecamps.controller;
 
-import org.niebieskidom.bluecamps.entity.Camp;
 import org.niebieskidom.bluecamps.entity.Child;
+import org.niebieskidom.bluecamps.entity.User;
 import org.niebieskidom.bluecamps.services.ChildService;
+import org.niebieskidom.bluecamps.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +17,11 @@ import java.util.Optional;
 @RequestMapping("/child")
 public class ChildController {
     private ChildService childService;
+    private UserService userService;
 
-    public ChildController(ChildService childService) {
+    public ChildController(ChildService childService, UserService userService) {
         this.childService = childService;
+        this.userService = userService;
     }
 
 
@@ -68,7 +71,6 @@ public class ChildController {
         if (child == null) {
             return "Haven't child like this.";
         }
-
         childService.deleteChild(id);
         return "redirect:/child/list";
     }

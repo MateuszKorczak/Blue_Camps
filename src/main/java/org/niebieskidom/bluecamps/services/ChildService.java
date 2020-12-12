@@ -41,4 +41,7 @@ public class ChildService {
     public List<Child> findChildrenByUserId(Long id){
         return childRepository.findChildrenByUserId(id);
     }
+    public List<Child> findChildrenByCampId(Long id){
+        return childRepository.findChildrenByCampId(id);
+    }
 }

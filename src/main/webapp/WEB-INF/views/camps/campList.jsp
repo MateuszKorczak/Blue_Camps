@@ -27,9 +27,9 @@
                 <td><c:out value="${camp.endDate}"/></td>
                 <td><c:out value="${camp.personLimit}"/></td>
                 <td>
-                    <form action="/child/list">
-                            <%--                        <input name="id" value="${camp.children}" hidden>--%>
-                        <button type="submit">Pokaż listę dzieci</button>
+                    <form method="POST" action="/camp/children">
+                        <input name="id" value="${camp.id}" hidden>
+                        <button type="submit">Pokaż dzieci</button>
                     </form>
                     <form method="POST" action="/camp/addChild">
                         <input name="id" value="${camp.id}" hidden>

@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-
     @Override
     public void updateUser(User user) {
         Optional<User> entity = userRepository.findById(user.getId());

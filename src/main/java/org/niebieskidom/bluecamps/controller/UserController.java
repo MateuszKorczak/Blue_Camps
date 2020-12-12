@@ -158,13 +158,6 @@ public class UserController {
     }
 
 
-//    @GetMapping("/children/{id}")
-//    public String childrenOfUser(@PathVariable Long id, Model model){
-//        List<Child> children = childService.findChildrenByUserId(id);
-//        model.addAttribute("children",children);
-//        return "children/childrenList";
-//    }
-
     @PostMapping("/children")
     public String childrenOfUser( Model model, @RequestParam long id){
         List<Child> children = childService.findChildrenByUserId(id);
