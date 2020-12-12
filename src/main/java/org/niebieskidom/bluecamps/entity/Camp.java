@@ -1,5 +1,7 @@
 package org.niebieskidom.bluecamps.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
@@ -45,6 +47,7 @@ public class Camp {
     private Integer personLimit;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "camp_children", joinColumns = @JoinColumn(name = "camp_id"),
             inverseJoinColumns = @JoinColumn(name = "children_id"))
     private List<Child> children;

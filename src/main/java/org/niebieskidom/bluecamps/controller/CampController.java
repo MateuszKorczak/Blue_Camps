@@ -91,6 +91,7 @@ public class CampController {
         if (camp == null) {                   //dodaj obsługę błędu
             return "have problems";
         }
+        camp.getChildren().clear();
         campService.deleteCamp(id);
         return "redirect:/camp/all";
     }

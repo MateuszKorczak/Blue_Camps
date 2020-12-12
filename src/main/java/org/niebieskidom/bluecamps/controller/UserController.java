@@ -129,10 +129,11 @@ public class UserController {
         User user = optionalUser.orElse(null);
         if (user == null) {                   //dodaj obsługę błędu
             return "have problems";
-        } else {
-            userService.deleteUser(id);
-            return "redirect:/user/all";
         }
+        user.getRoles().clear();
+        user.getChildren().clear();
+        userService.deleteUser(id);
+        return "redirect:/user/all";
     }
 
 

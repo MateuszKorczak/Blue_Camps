@@ -50,10 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteUser(Long id) {
-        Optional<User> optionalUser = getUser(id);
-        User user = optionalUser.orElse(null);
-        Set<Role> setRole = user.getRoles();
-        roleRepository.deleteAll(setRole);
         userRepository.deleteById(id);
     }
 

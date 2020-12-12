@@ -15,7 +15,7 @@
         <th>Data rozpoczęcia</th>
         <th>Data zakończenia</th>
         <th>Limit osób</th>
-        <th>Lista dzieci</th>
+        <th>Dzieci</th>
         <th>Edycja</th>
         </thead>
         <tbody>
@@ -30,6 +30,10 @@
                     <form action="/child/list">
                             <%--                        <input name="id" value="${camp.children}" hidden>--%>
                         <button type="submit">Pokaż listę dzieci</button>
+                    </form>
+                    <form method="POST" action="/camp/addChild">
+                        <input name="id" value="${camp.id}" hidden>
+                        <button type="submit">Dodaj dziecko</button>
                     </form>
                 </td>
                 <td>
