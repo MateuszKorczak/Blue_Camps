@@ -68,13 +68,16 @@ public class UserController {
         return "users/userList";
     }
 
-    @GetMapping("/logged")
-    public String showLoggedUser(@RequestParam String username, Model model) {
-        Optional<User> user = Optional.ofNullable(userService.findByUserName(username));
+    //napis poprawnie
+    @GetMapping("/logged/{username}")
+    public String showLoggedUser(@PathVariable String username, Model model) {
+        User user = userService.findByUserName(username);
+//
+//        Optional<User> user = Optional.ofNullable(userService.findByUserName(username));
+//        User user1 = user.orElse(null);
         model.addAttribute("user", user);
         return "users/userLogged";
     }
-
 
     @GetMapping("/add")
     public String addUser(Model model) {
@@ -82,14 +85,15 @@ public class UserController {
         return "users/userForm";
     }
 
-
     @PostMapping("/add")
     public String addUser(@Valid User user, BindingResult bindingResult) {
-        List<User> users = userService.showUsers();
-        for (User u : users) {
-            if (u.getUsername().equals(user.getUsername())) {
-                FieldError error = new FieldError("user", "username", "Nazwa użytkownika już istnieje w bazie danych");
-                bindingResult.addError(error);
+        if (user.getId() == null) {
+            List<User> users = userService.showUsers();
+            for (User u : users) {
+                if (u.getUsername().equals(user.getUsername())) {
+                    FieldError error = new FieldError("user", "username", "Nazwa użytkownika już istnieje w bazie danych");
+                    bindingResult.addError(error);
+                }
             }
         }
         if (bindingResult.hasErrors()) {
@@ -107,6 +111,23 @@ public class UserController {
         }
         return "redirect:/user/all";
     }
+
+    @GetMapping("/edit")
+    public String updateUser(User user) {
+        userService.updateUser(user);
+        return "redirect:/user/all";
+    }
+
+//    @GetMapping("/edit/{id}")
+//    public String updateUser(@PathVariable Long id, Model model) {
+//        Optional<User> optionalUser = userService.getUser(id);
+//        User user = optionalUser.orElse(null);
+//        if (user == null) {
+//            return "Have a problem dude.";
+//        }
+//        model.addAttribute("user", user);
+//        return "users/userForm";
+//    }
 
 
     @PostMapping("/edit")
@@ -136,5 +157,19 @@ public class UserController {
         return "redirect:/user/all";
     }
 
+
+//    @GetMapping("/children/{id}")
+//    public String childrenOfUser(@PathVariable Long id, Model model){
+//        List<Child> children = childService.findChildrenByUserId(id);
+//        model.addAttribute("children",children);
+//        return "children/childrenList";
+//    }
+
+    @PostMapping("/children")
+    public String childrenOfUser( Model model, @RequestParam long id){
+        List<Child> children = childService.findChildrenByUserId(id);
+        model.addAttribute("children",children);
+        return "children/childrenList";
+    }
 
 }

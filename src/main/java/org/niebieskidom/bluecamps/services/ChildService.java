@@ -38,4 +38,7 @@ public class ChildService {
         childRepository.save(child);
     }
 
+    public List<Child> findChildrenByUserId(Long id){
+        return childRepository.findChildrenByUserId(id);
+    }
 }

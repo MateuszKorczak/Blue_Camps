@@ -14,7 +14,7 @@
         <th>Imię</th>
         <th>Nazwisko</th>
         <th>Email</th>
-        <th>Lista dzieci</th>
+        <th>Dzieci</th>
         <th>Edycja</th>
         </thead>
         <tbody>
@@ -25,9 +25,9 @@
                 <td><c:out value="${user.lastName}"/></td>
                 <td><c:out value="${user.email}"/></td>
                 <td>
-                    <form  action="/child/list">
-<%--                        <input name="id" value="${camp.children}" hidden>--%>
-                        <button type="submit">Pokaż listę dzieci</button>
+                    <form method="POST" action="/user/children">
+                        <input name="id" value="${user.id}" hidden>
+                        <button type="submit">Pokaż dzieci</button>
                     </form>
                 </td>
                 <td>

@@ -68,6 +68,7 @@ public class ChildController {
         if (child == null) {
             return "Haven't child like this.";
         }
+
         childService.deleteChild(id);
         return "redirect:/child/list";
     }

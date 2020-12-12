@@ -12,33 +12,34 @@
 <div class="container">
     <h1>Witaj na stronie</h1>
     <br>
-    <sec:authorize access="hasRole('ADMIN')">
-        <p>Zalogowany jako: <sec:authentication property="username"/></p>
-        <p>Posiada role: <sec:authentication property="authorities"/></p>
+        <sec:authorize access="hasRole('ADMIN')">
+            <p>Zalogowany jako: <sec:authentication property="username"/></p>
+            <p>Posiada role: <sec:authentication property="authorities"/></p>
 
-        <form action="/camp/all">
-            <button type="submit">Pokaż widok obozów</button>
-        </form>
-        <form action="/child/list">
-            <button type="submit">Pokaż listę dzieci</button>
-        </form>
-        <form action="/user/all">
-            <button type="submit">Pokaż wszystkich użytkowników</button>
-        </form>
-    </sec:authorize>
+            <form action="/camp/all">
+                <button type="submit">Pokaż widok obozów</button>
+            </form>
+            <form action="/child/list">
+                <button type="submit">Pokaż listę dzieci</button>
+            </form>
+            <form action="/user/all">
+                <button type="submit">Pokaż wszystkich użytkowników</button>
+            </form>
+        </sec:authorize>
 
-    <div class="container">
-        <h1>Moje dzieci</h1>
+        <h1>Dzieci użytkownika ${user.firstName}</h1>
         <table class="table" border="1">
             <tr>
                 <th>Imię</th>
                 <th>Data urodzenia</th>
+                <th>Status płatności</th>
+                <th>Opcje</th>
             </tr>
-            <c:forEach items="${users.children}" var="child">
+            <c:forEach items="${user.children}" var="child">
                 <tr>
                     <td>${child.firstName}</td>
                     <td>${child.birthDate}</td>
-                    <td>${child.paymentStatus}"/></td>
+                    <td>${child.paymentStatus}</td>
                     <td>
                         <form method="POST" action="${pageContext.request.contextPath}/child/edit">
                             <input name="id" value="${child.id}" hidden>
@@ -52,11 +53,16 @@
                 </tr>
             </c:forEach>
         </table>
+        <br>
+        <form method="GET" action="/child/add">
+            <button type="submit">Dodaj dziecko</button>
+        </form>
     </div>
-    <form action="<c:url value="/logout"/>" method="post">
-        <input class="fa fa-id-badge" type="submit" value="Wyloguj">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
-</div>
+
+    <%--    <form action="<c:url value="/logout"/>" method="post">--%>
+    <%--        <input class="fa fa-id-badge" type="submit" value="Wyloguj">--%>
+    <%--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+    <%--    </form>--%>
+
 </body>
 </html>

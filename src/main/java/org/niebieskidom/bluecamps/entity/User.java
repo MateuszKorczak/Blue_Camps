@@ -58,7 +58,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_child", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "child_id"))
-    private List<Child> children;
+    private List<Child> children = new ArrayList<>();
 
 //    constructor
 
