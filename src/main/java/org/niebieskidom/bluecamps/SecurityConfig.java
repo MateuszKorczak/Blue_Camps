@@ -30,8 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new SpringDataUserDetailsService();
     }
 
-
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -56,7 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                  wyłączone logowanie
                 .csrf().disable()   //do usunięcia w przyszłości
                 .authorizeRequests()
-                .antMatchers("/**", "/user/*", "/child/**", "/camp/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("camp/**").hasRole("ADMIN")
+                .antMatchers("user/**","child/**").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin()  .loginPage("/login")
                 .defaultSuccessUrl("/user/logged", true)
